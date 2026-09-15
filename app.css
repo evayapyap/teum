@@ -23,8 +23,8 @@
   --ht-color-error-soft: #f3e8e6;
   --ht-color-scrim: rgba(12, 18, 52, 0.5);
 
-  /* Font family — Wanted Sans 확정, 공식 권장 폴백 순서 */
-  --ht-font-sans: "Wanted Sans Variable", "Wanted Sans", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  /* Font family — Pretendard Variable과 한국어 UI용 폴백 순서 */
+  --ht-font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
   /* Type scale — 프로토타입 후보 */
   --ht-type-display-size: clamp(2.5rem, 10vw, 3.25rem);
