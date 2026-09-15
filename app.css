@@ -1,0 +1,1731 @@
+/*
+ * 한틈 모바일 웹 디자인 시스템 v0.3
+ * 역할이 문서에서 확정된 값과 프로토타입 검증용 후보값을 분리한다.
+ */
+
+:root {
+  /* Color roles — 디자인 가이드 확정 */
+  --ht-color-ground: #f7f7f7;
+  --ht-color-signature: #2f4ed6;
+  --ht-color-deep: #2a41b0;
+  --ht-color-ink: #1a2350;
+  --ht-color-interaction: #8fa0ea;
+  --ht-color-reverse: #ffffff;
+
+  /* 안녕돌 조형색 후보. UI-08에서 색상값과 적용 역할은 아직 확정하지 않았다. */
+  --ht-stone-charcoal: #3a3a3d;
+
+  /* Functional colors — 프로토타입 후보 */
+  --ht-color-muted: #67709a;
+  --ht-color-line: rgba(26, 35, 80, 0.2);
+  --ht-color-line-strong: rgba(26, 35, 80, 0.42);
+  --ht-color-error: #a63a35;
+  --ht-color-error-soft: #f3e8e6;
+  --ht-color-scrim: rgba(12, 18, 52, 0.5);
+
+  /* Font family — Wanted Sans 확정, 공식 권장 폴백 순서 */
+  --ht-font-sans: "Wanted Sans Variable", "Wanted Sans", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
+  /* Type scale — 프로토타입 후보 */
+  --ht-type-display-size: clamp(2.5rem, 10vw, 3.25rem);
+  --ht-type-display-leading: 0.98;
+  --ht-type-display-weight: 650;
+  --ht-type-display-tracking: -0.055em;
+
+  --ht-type-sentence-size: clamp(1.55rem, 6.6vw, 2rem);
+  --ht-type-sentence-leading: 1.28;
+  --ht-type-sentence-weight: 620;
+  --ht-type-sentence-tracking: -0.035em;
+
+  --ht-type-body-size: 1rem;
+  --ht-type-body-leading: 1.65;
+  --ht-type-body-weight: 450;
+  --ht-type-body-tracking: -0.018em;
+
+  --ht-type-caption-size: 0.75rem;
+  --ht-type-caption-leading: 1.45;
+  --ht-type-caption-weight: 620;
+  --ht-type-caption-tracking: 0.01em;
+
+  --ht-type-label-size: 0.92rem;
+  --ht-type-label-leading: 1.3;
+  --ht-type-label-weight: 620;
+
+  /* Spacing — 프로토타입 후보 */
+  --ht-space-1: 0.25rem;
+  --ht-space-2: 0.5rem;
+  --ht-space-3: 0.75rem;
+  --ht-space-4: 1rem;
+  --ht-space-5: 1.5rem;
+  --ht-space-6: 2rem;
+  --ht-space-7: 3rem;
+  --ht-space-8: 4rem;
+  --ht-screen-gutter: clamp(1.25rem, 6vw, 1.5rem);
+
+  /* 선택지가 8개인 화면에서 질문을 `이전` 컨트롤 바로 아래로 올릴 때 띄우는 거리.
+     컨트롤이 절대 배치라 흐름에서 빠져 있으므로 직접 띄운다(SEL-COM-05). */
+  --ht-selection-top-gap: 5rem;
+
+  /* Shape — 프로토타입 후보 */
+  --ht-radius-control: 1.25rem;
+  --ht-radius-sheet: 2rem;
+  --ht-radius-pill: 999px;
+
+  /* Field geometry — 블루 블록의 단계별 구도
+     inset은 `위 오른쪽 아래 왼쪽` 순서로 화면 가장자리에서 떨어진 거리다.
+     예: `62% 0 0 0`은 위에서 62% 내려온 지점부터 화면 바닥까지 채운다.
+     radius는 `가로 곡률 / 세로 곡률`을 네 모서리(좌상 우상 우하 좌하) 순서로 적는다.
+     design/system 화면 예시와 prototype 실화면이 같은 값을 공유한다. */
+  --ht-field-entry-inset: 62% 0 0 0;
+  --ht-field-entry-radius: 50% 50% 0 0 / 22% 22% 0 0;
+
+  --ht-field-mind1-inset: 0 0 76% 58%;
+  --ht-field-mind1-radius: 0 0 0 7rem;
+
+  --ht-field-mind2-inset: 0 0 80% 0;
+  --ht-field-mind2-radius: 0 0 46% 46% / 0 0 34% 34%;
+
+  --ht-field-mind3-inset: 86% 48% 0 0;
+  --ht-field-mind3-radius: 0 7rem 0 0;
+
+  --ht-field-action-inset: 0 0 92% 0;
+  --ht-field-action-radius: 0 0 1.5rem 1.5rem / 0 0 1rem 1rem;
+
+  --ht-field-air-inset: 48% 0 0 0;
+  --ht-field-air-radius: 50% 50% 0 0 / 18% 18% 0 0;
+
+  --ht-field-explore-inset: 0 0 0 56%;
+  --ht-field-explore-radius: 8rem 0 0 8rem / 6rem 0 0 6rem;
+
+  /* Touch and component size — 프로토타입 후보 */
+  --ht-touch-min: 2.75rem;
+  --ht-choice-height: 3.25rem;
+  --ht-choice-height-compact: 2.75rem;
+  --ht-action-height: 3.5rem;
+  --ht-nav-height: 4.75rem;
+  --ht-mobile-width: 390px;
+  --ht-mobile-height: 840px;
+
+  /* Motion — 프로토타입 후보 */
+  --ht-motion-fast: 140ms;
+  --ht-motion-base: 220ms;
+  --ht-motion-slow: 420ms;
+  --ht-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 블루 블록이 다음 구도로 이동하는 시간. 전환 단계만 더 길게 쓴다(RIT-TR-02). */
+  --ht-field-motion: 420ms;
+  --ht-field-motion-transition: 1800ms;
+
+  /* 안녕돌이 `살며시` 나타나고 사라지는 시간과 곡선(RIT-AIR-04).
+     app.js가 이 값을 그대로 읽어 노출 시간을 센다.
+     --ht-ease-standard는 끝에서 잦아드는 곡선이라 `확` 나타나는 인상을 준다.
+     안녕돌은 앞뒤가 고른 곡선을 쓴다. */
+  --ht-stone-motion: 1600ms;
+  --ht-stone-ease: cubic-bezier(0.4, 0, 0.6, 1);
+
+  /* 빛나는 안녕돌의 국소광 — STONE-FLOW-05·06
+     형태는 그대로 두고 빛만 더한다. 이 빛은 감정 개선·리추얼 성공·완료 보상을
+     뜻하지 않으므로 반짝임 없이 은은하게 둔다.
+     지면이 Off White라 밝은 빛은 지면에 묻힌다. 빛을 돌보다 밝게 두는 대신
+     지면 위에 옅은 색 웅덩이로 깔아 국소광으로 읽히게 했다.
+     퍼짐은 돌 너비의 배수다. 디자인 가이드 6장에서 광량이 결정 대기이므로 후보값이다. */
+  --ht-stone-glow: rgba(143, 160, 234, 0.5);
+  --ht-stone-glow-spread: 3.2;
+
+  /* Layer */
+  --ht-z-field: 0;
+  --ht-z-content: 1;
+  --ht-z-nav: 10;
+  --ht-z-scrim: 20;
+  --ht-z-sheet: 30;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ht-motion-fast: 1ms;
+    --ht-motion-base: 1ms;
+    --ht-motion-slow: 1ms;
+    --ht-field-motion: 1ms;
+    --ht-field-motion-transition: 1ms;
+    --ht-stone-motion: 1ms;
+  }
+}
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color: var(--ht-color-ink);
+  background: #e9eaf0;
+  font-family: var(--ht-font-sans);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  color: inherit;
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--ht-color-interaction);
+  outline-offset: 3px;
+}
+
+.ht-display,
+.ht-sentence,
+.ht-body,
+.ht-caption {
+  margin: 0;
+}
+
+.ht-display {
+  font-size: var(--ht-type-display-size);
+  font-weight: var(--ht-type-display-weight);
+  letter-spacing: var(--ht-type-display-tracking);
+  line-height: var(--ht-type-display-leading);
+}
+
+.ht-sentence {
+  font-size: var(--ht-type-sentence-size);
+  font-weight: var(--ht-type-sentence-weight);
+  letter-spacing: var(--ht-type-sentence-tracking);
+  line-height: var(--ht-type-sentence-leading);
+  word-break: keep-all;
+}
+
+.ht-body {
+  font-size: var(--ht-type-body-size);
+  font-weight: var(--ht-type-body-weight);
+  letter-spacing: var(--ht-type-body-tracking);
+  line-height: var(--ht-type-body-leading);
+  word-break: keep-all;
+}
+
+.ht-caption {
+  font-size: var(--ht-type-caption-size);
+  font-weight: var(--ht-type-caption-weight);
+  letter-spacing: var(--ht-type-caption-tracking);
+  line-height: var(--ht-type-caption-leading);
+}
+
+.ht-overline {
+  display: flex;
+  align-items: center;
+  gap: var(--ht-space-2);
+  margin: 0;
+  color: var(--ht-color-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.ht-overline::before {
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+}
+
+.ht-phone {
+  position: relative;
+  width: min(100%, var(--ht-mobile-width));
+  height: var(--ht-mobile-height);
+  overflow: hidden;
+  color: var(--ht-color-ink);
+  background: var(--ht-color-ground);
+  border: 1px solid rgba(26, 35, 80, 0.16);
+  border-radius: 2rem;
+  box-shadow: 0 1.5rem 4rem rgba(24, 31, 74, 0.16);
+  isolation: isolate;
+}
+
+.ht-phone__content {
+  position: relative;
+  z-index: var(--ht-z-content);
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  padding: max(1.5rem, env(safe-area-inset-top)) max(var(--ht-screen-gutter), env(safe-area-inset-right)) calc(var(--ht-nav-height) + 1rem + env(safe-area-inset-bottom)) max(var(--ht-screen-gutter), env(safe-area-inset-left));
+}
+
+.ht-phone__content--ritual {
+  padding-bottom: max(1.4rem, env(safe-area-inset-bottom));
+}
+
+.ht-phone .ht-sentence {
+  font-size: 1.625rem;
+  line-height: 1.24;
+}
+
+.ht-phone--entry .ht-phone__content {
+  justify-content: center;
+}
+
+.ht-entry-lockup {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.ht-entry-title {
+  flex: none;
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 650;
+  letter-spacing: -0.07em;
+  line-height: 0.95;
+}
+
+.ht-entry-copy {
+  display: grid;
+  flex: none;
+  gap: 0.15rem;
+  font-size: 0.875rem;
+  font-weight: 620;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.ht-entry-copy p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.ht-field {
+  position: absolute;
+  z-index: var(--ht-z-field);
+  background: var(--ht-color-signature);
+  pointer-events: none;
+}
+
+.ht-field--selection {
+  inset: var(--ht-field-mind1-inset);
+  border-radius: var(--ht-field-mind1-radius);
+}
+
+.ht-field--entry {
+  inset: var(--ht-field-entry-inset);
+  border-radius: var(--ht-field-entry-radius);
+}
+
+.ht-field--explore {
+  inset: var(--ht-field-explore-inset);
+  border-radius: var(--ht-field-explore-radius);
+}
+
+.ht-screen-head {
+  display: flex;
+  min-height: 3rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.ht-screen-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 680;
+  letter-spacing: -0.04em;
+  line-height: var(--ht-touch-min);
+}
+
+.ht-nav-control {
+  min-width: var(--ht-touch-min);
+  min-height: var(--ht-touch-min);
+  padding: 0;
+  color: var(--ht-color-ink);
+  background: transparent;
+  border: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.ht-phone[data-ritual-started="true"] .ht-bottom-nav {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ht-question {
+  min-height: 7.5rem;
+  padding-top: 1.45rem;
+}
+
+.ht-choice-list {
+  display: grid;
+  gap: 0.52rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ht-choice-list--compact {
+  gap: 0.3rem;
+}
+
+.ht-choice {
+  display: flex;
+  width: 100%;
+  min-height: var(--ht-choice-height);
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  color: var(--ht-color-ink);
+  background: transparent;
+  border: 1px solid var(--ht-color-line-strong);
+  border-radius: var(--ht-radius-control);
+  cursor: pointer;
+  font-size: var(--ht-type-label-size);
+  font-weight: var(--ht-type-label-weight);
+  line-height: var(--ht-type-label-leading);
+  text-align: left;
+  transition: background var(--ht-motion-fast) var(--ht-ease-standard), border-color var(--ht-motion-fast) var(--ht-ease-standard), transform var(--ht-motion-fast) var(--ht-ease-standard);
+}
+
+.ht-choice::after {
+  width: 0.45rem;
+  height: 0.45rem;
+  flex: none;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  content: "";
+}
+
+.ht-choice:hover:not(:disabled) {
+  border-color: var(--ht-color-ink);
+}
+
+.ht-choice:active:not(:disabled) {
+  transform: scale(0.988);
+}
+
+.ht-choice[aria-pressed="true"] {
+  background: var(--ht-color-interaction);
+  border-color: var(--ht-color-ink);
+}
+
+.ht-choice[aria-pressed="true"]::after {
+  background: var(--ht-color-ink);
+  box-shadow: inset 0 0 0 2px var(--ht-color-interaction);
+}
+
+.ht-choice:disabled:not([aria-pressed="true"]) {
+  opacity: 0.46;
+  cursor: default;
+}
+
+.ht-choice-list--compact .ht-choice {
+  min-height: var(--ht-choice-height-compact);
+  padding-block: 0.58rem;
+}
+
+.ht-action-row {
+  display: grid;
+  gap: var(--ht-space-3);
+  margin-top: auto;
+}
+
+.ht-primary-action,
+.ht-save-action {
+  min-height: var(--ht-action-height);
+  border-radius: var(--ht-radius-pill);
+  cursor: pointer;
+  font-size: var(--ht-type-label-size);
+  font-weight: 700;
+  transition: background var(--ht-motion-fast) var(--ht-ease-standard), color var(--ht-motion-fast) var(--ht-ease-standard), transform var(--ht-motion-fast) var(--ht-ease-standard);
+}
+
+.ht-primary-action {
+  width: 100%;
+  color: var(--ht-color-reverse);
+  background: var(--ht-color-ink);
+  border: 1px solid var(--ht-color-ink);
+}
+
+.ht-primary-action:hover {
+  background: var(--ht-color-deep);
+}
+
+.ht-primary-action:active,
+.ht-save-action:active {
+  transform: scale(0.985);
+}
+
+.ht-primary-action:disabled {
+  color: rgba(255, 255, 255, 0.72);
+  background: var(--ht-color-muted);
+  border-color: var(--ht-color-muted);
+  cursor: default;
+}
+
+.ht-save-action {
+  width: 100%;
+  color: var(--ht-color-ink);
+  background: transparent;
+  border: 1px solid var(--ht-color-line-strong);
+}
+
+.ht-save-action[aria-pressed="true"] {
+  background: var(--ht-color-interaction);
+  border-color: var(--ht-color-ink);
+}
+
+.ht-inline-error {
+  padding: 0.72rem 0.9rem;
+  color: var(--ht-color-error);
+  background: var(--ht-color-error-soft);
+  border-left: 3px solid var(--ht-color-error);
+  font-size: 0.875rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.ht-bottom-nav {
+  position: absolute;
+  z-index: var(--ht-z-nav);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  height: var(--ht-nav-height);
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0.55rem max(0.35rem, env(safe-area-inset-right)) max(0.4rem, env(safe-area-inset-bottom)) max(0.35rem, env(safe-area-inset-left));
+  background: rgba(247, 247, 247, 0.96);
+  border-top: 1px solid var(--ht-color-line);
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.ht-bottom-nav__item {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: var(--ht-touch-min);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--ht-color-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color var(--ht-motion-fast) var(--ht-ease-standard), opacity var(--ht-motion-fast) var(--ht-ease-standard);
+}
+
+.ht-bottom-nav__item::after {
+  position: absolute;
+  right: 27%;
+  bottom: 0;
+  left: 27%;
+  height: 2px;
+  background: transparent;
+  border-radius: var(--ht-radius-pill);
+  content: "";
+}
+
+.ht-bottom-nav__item[aria-current="page"] {
+  color: var(--ht-color-ink);
+}
+
+.ht-bottom-nav__item[aria-current="page"]::after {
+  background: var(--ht-color-signature);
+}
+
+.ht-bottom-nav__icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  object-fit: contain;
+}
+
+.ht-brand-screen {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.ht-brand-screen::-webkit-scrollbar {
+  display: none;
+}
+
+.ht-brand-story {
+  padding: 0.9rem 0 1.15rem;
+}
+
+.ht-brand-story h4 {
+  margin: 0 0 1rem;
+  color: var(--ht-color-signature);
+  font-size: 2.15rem;
+  font-weight: 650;
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+}
+
+.ht-brand-story__copy {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.ht-brand-story__copy p,
+.ht-brand-info p {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: -0.025em;
+  line-height: 1.55;
+}
+
+.ht-brand-info {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--ht-color-line-strong);
+}
+
+.ht-brand-info__label {
+  margin: 0;
+  color: var(--ht-color-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.ht-brand-info h4:not(.ht-brand-info__label) {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 680;
+  letter-spacing: -0.04em;
+  line-height: 1.35;
+}
+
+.ht-brand-contact {
+  padding-bottom: 1.25rem;
+}
+
+.ht-brand-contact a {
+  width: fit-content;
+  color: var(--ht-color-signature);
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.ht-storage-editorial {
+  margin-top: 1.25rem;
+}
+
+.ht-storage-editorial__band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding: 0 0.15rem 0.65rem;
+  color: var(--ht-color-muted);
+  background: transparent;
+  border-bottom: 1px solid var(--ht-color-line-strong);
+  font-size: 0.6875rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+}
+
+.ht-storage-editorial__grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ht-storage-editorial__panel {
+  -webkit-appearance: none;
+  appearance: none;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 1.1rem;
+  color: var(--ht-color-ink);
+  background: var(--ht-color-ground);
+  border: 1px solid var(--ht-color-line-strong);
+  border-radius: 1.6rem;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  transition: background var(--ht-motion-fast) var(--ht-ease-standard), transform var(--ht-motion-fast) var(--ht-ease-standard);
+}
+
+.ht-storage-editorial__panel--stone {
+  position: relative;
+  min-height: 11.75rem;
+  color: var(--ht-color-reverse);
+  background: var(--ht-color-signature);
+  border-color: var(--ht-color-signature);
+  border-radius: 2rem 2rem 0.65rem 2rem;
+}
+
+.ht-storage-editorial__panel--note {
+  min-height: 8.75rem;
+  background: var(--ht-color-reverse);
+  border-radius: 0.65rem 2rem 2rem 2rem;
+}
+
+.ht-storage-editorial__panel--stone:hover {
+  background: var(--ht-color-deep);
+}
+
+.ht-storage-editorial__panel--note:hover {
+  background: var(--ht-color-ground);
+}
+
+.ht-storage-editorial__panel:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--ht-color-interaction);
+  outline-offset: -4px;
+}
+
+.ht-storage-editorial__panel:active {
+  transform: scale(0.985);
+}
+
+.ht-storage-editorial__index {
+  align-self: flex-end;
+  color: var(--ht-color-muted);
+  font-size: 0.6875rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.ht-storage-editorial__panel--stone .ht-storage-editorial__index {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.ht-storage-editorial__visual {
+  position: absolute;
+  right: -1.8rem;
+  bottom: -2.5rem;
+  display: flex;
+  width: 11.5rem;
+  height: 11.5rem;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.ht-storage-editorial__visual img {
+  width: 145%;
+  max-width: none;
+  filter: invert(1);
+}
+
+.ht-storage-editorial__title {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  font-size: 1.8rem;
+  font-weight: 680;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.ht-storage-editorial__copy {
+  position: relative;
+  z-index: 1;
+  max-width: 15rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.ht-storage-editorial__panel--note .ht-storage-editorial__title {
+  margin-top: 0.4rem;
+  font-size: 1.75rem;
+}
+
+.ht-storage-editorial__panel--note .ht-storage-editorial__copy {
+  max-width: 18rem;
+  margin-top: 0.55rem;
+}
+
+.ht-editorial-number {
+  margin: 0;
+  color: var(--ht-color-reverse);
+  font-size: 5rem;
+  font-weight: 650;
+  letter-spacing: -0.08em;
+  line-height: 0.78;
+}
+
+.ht-editorial-card {
+  display: grid;
+  margin-top: 2.2rem;
+  gap: 0;
+  grid-template-columns: 1fr 1fr;
+  background: var(--ht-color-ground);
+  border-top: 1px solid var(--ht-color-ink);
+  border-bottom: 1px solid var(--ht-color-ink);
+}
+
+.ht-editorial-card__index,
+.ht-editorial-card__copy {
+  padding: 1rem 0.9rem;
+}
+
+.ht-photo-type {
+  position: relative;
+  min-height: 14rem;
+  overflow: hidden;
+  color: var(--ht-color-reverse);
+  background: var(--ht-color-deep);
+  border-radius: 1.5rem;
+}
+
+.ht-photo-type__image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+}
+
+.ht-photo-type::after {
+  content: none;
+}
+
+.ht-photo-type--card {
+  min-height: 0;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 1.75rem;
+}
+
+.ht-space-screen {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.ht-space-screen::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.ht-space-intro-panel {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.9rem 1rem 0.95rem;
+  background: rgba(143, 160, 234, 0.14);
+  border: 0;
+  border-radius: 2rem 2rem 0.65rem 2rem;
+}
+
+.ht-space-screen .ht-question {
+  min-height: 0;
+  padding-top: 0;
+}
+
+.ht-space-intro {
+  max-width: 26ch;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.ht-space-feature-card {
+  margin: 1rem 0 0;
+  color: var(--ht-color-ink);
+  background: transparent;
+}
+
+.ht-space-feature-card__folio {
+  display: block;
+  margin-bottom: 0.6rem;
+  padding: 0 0.15rem;
+  color: var(--ht-color-ink);
+  font-size: clamp(0.92rem, 4vw, 1.02rem);
+  font-weight: 680;
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.ht-space-card-copy {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.85rem 0.15rem 0.65rem;
+}
+
+.ht-space-card-copy p {
+  margin: 0;
+}
+
+.ht-space-card-copy .ht-space-card-label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 720;
+  letter-spacing: 0.04em;
+}
+
+.ht-space-card-copy .ht-space-card-label::after {
+  height: 1px;
+  flex: 1;
+  background: var(--ht-color-line-strong);
+  content: "";
+}
+
+.ht-space-card-copy p {
+  font-size: 0.8125rem;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.ht-space-card-description span {
+  display: block;
+  text-align: justify;
+  text-align-last: justify;
+  text-justify: inter-character;
+}
+
+.ht-space-card-description span:last-child {
+  text-align: left;
+  text-align-last: left;
+}
+
+.ht-space-screen .ht-primary-action {
+  min-height: var(--ht-touch-min);
+}
+
+.ht-editorial-card__index {
+  border-right: 1px solid var(--ht-color-line-strong);
+}
+
+.ht-editorial-card__copy {
+  display: flex;
+  min-height: 9rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ht-scrim {
+  position: absolute;
+  z-index: var(--ht-z-scrim);
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  background: var(--ht-color-scrim);
+  transition: opacity var(--ht-motion-base) var(--ht-ease-standard), visibility var(--ht-motion-base) var(--ht-ease-standard);
+}
+
+.ht-bottom-sheet {
+  position: absolute;
+  z-index: var(--ht-z-sheet);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* 내용만큼만 올라온다. 상한은 max-height가 잡으므로 높이를 고정하지 않는다.
+     고정하면 공간마다 다른 문구 길이에 빈 지면이 남는다. */
+  height: auto;
+  max-height: 94%;
+  overflow: auto;
+  padding: 0.875rem var(--ht-screen-gutter) 1rem;
+  transform: translateY(102%);
+  background: var(--ht-color-ground);
+  border-radius: var(--ht-radius-sheet) var(--ht-radius-sheet) 0 0;
+  transition: transform var(--ht-motion-slow) var(--ht-ease-standard);
+}
+
+/* 열림 상태는 프레임 요소가 들고 있다. design/system은 `.ht-phone`,
+   prototype은 `.ht-viewport`를 쓰므로 클래스에 묶지 않는다. */
+[data-sheet-open="true"] .ht-scrim {
+  opacity: 1;
+  visibility: visible;
+}
+
+[data-sheet-open="true"] .ht-bottom-sheet {
+  transform: translateY(0);
+}
+
+.ht-bottom-sheet__head {
+  display: flex;
+  min-height: var(--ht-touch-min);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ht-bottom-sheet__title {
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+  font-weight: 680;
+  letter-spacing: -0.03em;
+}
+
+.ht-bottom-sheet__close {
+  width: var(--ht-touch-min);
+  height: var(--ht-touch-min);
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--ht-color-line-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.ht-space-photo {
+  position: relative;
+  display: flex;
+  min-height: 9.25rem;
+  align-items: stretch;
+  margin: 0.65rem 0 0.85rem;
+  padding: 1rem var(--ht-screen-gutter);
+  overflow: hidden;
+  background: var(--ht-color-deep);
+  border-radius: 1.5rem;
+}
+
+.ht-space-photo__image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+}
+
+.ht-space-photo::after {
+  content: none;
+}
+
+.ht-space-photo-position {
+  display: flex;
+  gap: 0.35rem;
+  justify-content: center;
+  margin: -0.35rem 0 0.85rem;
+}
+
+.ht-space-photo-position span {
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--ht-color-line-strong);
+  border-radius: 50%;
+}
+
+.ht-space-photo-position span[aria-current="true"] {
+  background: var(--ht-color-signature);
+}
+
+.ht-space-effect {
+  margin-top: 0.55rem;
+  color: var(--ht-color-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 380px) {
+  .ht-phone {
+    height: min(var(--ht-mobile-height), 100svh);
+    min-height: 32rem;
+    overflow-y: auto;
+    border-radius: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/*
+ * 한틈 프로토타입 전용 레이아웃 — B1 골격
+ * 확정 시안이 아니다. 수치는 모두 후보값이며 tokens.css를 우선한다.
+ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.ht-app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  gap: var(--ht-space-5);
+  background: var(--ht-color-ground);
+  color: var(--ht-color-ink);
+  font-family: var(--ht-font-sans);
+  font-size: var(--ht-type-body-size);
+}
+
+/* 기준 뷰포트 390×840 CSS px. 좁은 화면에서는 전체 화면을 그대로 쓴다. */
+.ht-viewport {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(100vw, var(--ht-mobile-width));
+  height: min(100dvh, var(--ht-mobile-height));
+  overflow: hidden;
+  background: var(--ht-color-ground);
+}
+
+/* 데스크톱 검토용 프레임. 실제 기기에서는 나타나지 않는다. */
+@media (min-width: 430px) and (min-height: 880px) {
+  .ht-viewport {
+    border-radius: var(--ht-radius-sheet);
+    outline: 1px solid var(--ht-color-line);
+    box-shadow: 0 1.5rem 3rem rgba(26, 35, 80, 0.12);
+  }
+}
+
+.ht-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* 한 번에 한 단계만 지면을 차지한다. */
+.ht-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 클래스 선택자가 UA의 [hidden]보다 우선하므로 숨김을 명시한다. */
+.ht-step[hidden] {
+  display: none;
+}
+
+/* 하단 메뉴가 노출된 단계에서는 콘텐츠가 메뉴에 가리지 않게 한다. */
+.ht-viewport[data-nav-visible="true"] .ht-step {
+  bottom: var(--ht-nav-height);
+}
+
+/* 실제 지면. 컬러 면은 .ht-step에 직접 붙어 화면 끝까지 닿고, 콘텐츠만 여백 안에 든다.
+   design/system의 `.ht-phone` / `.ht-phone__content` 관계를 그대로 옮긴 것이다. */
+.ht-screen {
+  position: relative;
+  z-index: var(--ht-z-content);
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
+  padding:
+    max(1.5rem, env(safe-area-inset-top))
+    max(var(--ht-screen-gutter), env(safe-area-inset-right))
+    max(1.4rem, env(safe-area-inset-bottom))
+    max(var(--ht-screen-gutter), env(safe-area-inset-left));
+}
+
+/* 마음 선택 1·2·3의 내용을 지면 세로 가운데에 둔다.
+ *
+ * 사용자 결정(2026-09-15): 상단과 하단에 균일한 여백이 생기게 가운데 배치한다.
+ * 이전 기준인 SEL-COM-05(세로 중앙 재배치 금지)와 SEL-COM-02(세 화면 같은 세로
+ * 시작점)를 이 결정에 맞춰 개정했다. 선택지 수가 다르므로 화면별 시작점은 달라진다.
+ *
+ * 목록 자체는 늘이지 않는다. 남는 공간은 위아래 여백으로만 배분한다.
+ */
+.ht-screen--selection {
+  justify-content: center;
+}
+
+/* 마음 선택 3만 상단 정렬 예외 — 사용자 결정(2026-09-15)
+ *
+ * 선택지가 8개라 목록이 길고, 중앙 배치에서는 `이전` 컨트롤과 질문 사이가 100px 비었다.
+ * 이 화면만 질문을 컨트롤 바로 아래로 올리고 남는 공간을 아래에 둔다.
+ * 마음 선택 1·2는 중앙 배치를 그대로 쓴다. 규칙이 둘로 나뉘는 예외임을 SEL-COM-05에 적었다.
+ *
+ * 간격은 후보값이다. 컨트롤이 절대 배치라 흐름에서 빠져 있으므로 직접 띄운다.
+ */
+.ht-screen--selection-top {
+  justify-content: flex-start;
+  padding-top: calc(max(1.5rem, env(safe-area-inset-top)) + var(--ht-selection-top-gap));
+}
+
+/* `이전`은 중앙 배치되는 내용과 함께 움직이면 안 된다.
+ *
+ * SEL-COM-13은 마음 선택 2·3에서 `이전`을 같은 위치에 두라고 한다. 흐름에 두면
+ * 선택지 수에 따라 중앙 배치 결과가 달라져 두 화면의 컨트롤 높이가 어긋난다.
+ * 그래서 컨트롤만 지면 상단에 고정하고 질문·선택지만 가운데에 배치한다.
+ */
+/* 컨트롤이 블루 필드 위에 놓이는 화면은 Reverse Text를 쓴다.
+   가이드 4.1은 Signature / Deep Blue 위 텍스트를 White로 정한다. */
+.ht-screen-head--on-field .ht-nav-control {
+  color: var(--ht-color-reverse);
+}
+
+.ht-screen--selection .ht-screen-head {
+  position: absolute;
+  /* 절대 배치는 지면의 padding box를 기준으로 하므로 여백을 직접 다시 준다.
+     선택지 컬럼과 왼쪽 끝을 맞춘다. */
+  top: max(1.5rem, env(safe-area-inset-top));
+  right: max(var(--ht-screen-gutter), env(safe-area-inset-right));
+  left: max(var(--ht-screen-gutter), env(safe-area-inset-left));
+}
+
+/* 클래스 선택자가 UA의 [hidden]보다 우선하므로 숨김을 명시한다. */
+.ht-choice-list[hidden] {
+  display: none;
+}
+
+/* 지면 블루 필드 — 화면마다 위치와 면적만 바뀐다.
+ *
+ * 디자인 가이드: `화면은 Off White 지면 위에서 Signature Blue 필드의 위치와 면적으로 구획된다`.
+ * RIT-TR-03에 따라 마음 선택 3 → 환기 전환에서 이 필드가 끊기지 않고 환기 구도로 이동한다.
+ * 가장자리에 붙여 카드가 아니라 지면 분할로 읽히게 한다.
+ *
+ * 모든 수치는 후보값이다. 가이드 표의 방향(상단 / 측면 / 하단 / 환기는 가장 큼)을 따르되
+ * 면적은 중앙 배치된 문구를 가리지 않는 범위로 잡았다.
+ */
+.ht-field {
+  transition:
+    inset var(--ht-field-motion) var(--ht-ease-standard),
+    border-radius var(--ht-field-motion) var(--ht-ease-standard);
+}
+
+/* 안녕돌 — 요구사항 정의서 §9.1.2 · §9.4
+ *
+ * RIT-AIR-04 환기 문장 뒤에 사용자 입력 없이 살며시 나타난다.
+ * RIT-AIR-07 소멸하거나 치워지는 느낌보다 컬러 면 뒤로 넘어가 보이지 않게 되는 인상을
+ *            우선한다. DOM에서 필드보다 먼저 두어 필드가 위에 그려지게 했다.
+ * STONE-FLOW-04 이면에 머무르는 동안 돌의 일부도 노출하지 않는다.
+ *
+ * 색은 CSS가 정한다. 조형 SVG를 마스크로 쓰므로 정본 조형이 바뀌어도 색 규칙은 남는다.
+ * 현무암 차콜은 UI-08에서 `브랜드 컬러 후보로 검토하되 색상값과 적용 역할은 확정하지
+ * 않는다`로 남아 있다. 아래 값은 안녕돌 조형색 후보이며 확정값이 아니다.
+ *
+ * 크기·위치·시간도 모두 후보값이다.
+ */
+.ht-stone {
+  position: absolute;
+  z-index: var(--ht-z-field);
+  left: 50%;
+  /* 환기 구도의 필드 상단이 48%다. 그 위에 돌을 두고 아래로 내려 필드 뒤로 보낸다. */
+  bottom: calc(52% + 0.75rem);
+  width: 22%;
+  aspect-ratio: 517 / 350;
+
+  /* 시작: 왼쪽에서 투명한 상태 */
+  opacity: 0;
+  transform: translate(calc(-50% - 3.5rem), 0.5rem);
+  transition:
+    opacity var(--ht-stone-motion) var(--ht-stone-ease),
+    transform var(--ht-stone-motion) var(--ht-stone-ease);
+}
+
+/* 조형. mask가 자식을 잘라내므로 빛과 같은 요소에 둘 수 없다. */
+.ht-stone-shape {
+  position: absolute;
+  inset: 0;
+  background: var(--ht-stone-charcoal);
+  mask-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS0g7ZSE66Gc7Yag7YOA7J6FIOyghOyaqS4g7JWI64WV64+MIOygleuzuCDsobDtmJXsnbQg7JWE64uI64ukLg0KICAgICDstpzsspg6IHNvdXJjZS9ndWFyZGlhbi1zdG9uZS9ndWFyZGlhbi1zdG9uZS1zbWFsbC1ibHVlLnN2Zw0KICAgICDsm5Drs7jsnZggIzAzNTdmMeydhCDrlJTsnpDsnbgg6rCA7J2065OcIDQuMeydmCBTaWduYXR1cmUgQmx1ZSAjMkY0RUQ27Jy866GcIOuwlOq/qOuLpC4NCiAgICAg7KCV67O47J20IOygle2VtOyngOuptCDsnbQg7YyM7J287J2EIOq1kOyytO2VnOuLpC4gLS0+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUxNyAzNTAiIHdpZHRoPSI1MTciIGhlaWdodD0iMzUwIj4NCjxwYXRoIGQ9Ik0yNDguMDQgMTYuMUMyODEuNjMgMTQuNDMgMzE0LjE1IDI0LjA0IDM0NC4zNCAzNy43MUMzNjEuOTggNDUuNyAzODAuNDkgNTMuNDEgMzk2LjY5IDY0LjE5QzQzMC40OCA4Ni42NiA0NjIuMDMgMTE2LjQ2IDQ4NC4xOSAxNTAuNzFDNTAwLjU0IDE3NS45NiA1MTAuMTEgMjA2LjYyIDUwNi40OCAyMzcuMTRDNTA0Ljg2IDI1MC42OSA1MDIuMTIgMjYzLjIyIDQ5MS45MiAyNzMuMDVDNDg2LjEyIDI3OC42MyA0NzkuMTggMjgzLjA3IDQ3Mi40MiAyODcuMzNDNDU5LjE5IDI5NS42OCA0NDUuNjIgMzAzLjY2IDQzMC40MSAzMDcuODRDNDE0LjQ2IDMxMi4yMSAzOTcuNzEgMzEzLjMyIDM4MS4yNCAzMTQuMjRDMzU1LjEyIDMxNS43MSAzMjguODkgMzE1LjQ4IDMwMi43OCAzMTcuMjRDMjYwLjk3IDMyMC4wNiAyMTkuNTcgMzI3LjkxIDE3Ny43MSAzMjkuODZDMTYyLjExIDMzMC41OSAxNDYuNjEgMzI5LjUxIDEzMS4xIDMyOC4yNkMxMTUuOSAzMjcuMDQgMTAwLjA4IDMyNi41OSA4NS4yNiAzMjIuODJDNjAuNTQgMzE2LjUxIDM5LjcgMzAxLjQyIDI2LjI0IDI3OS42NkMxNi44NSAyNjQuNDggMTYuMzMgMjQ3LjU1IDE4LjY3IDIzMC4xNEMyMi44NSAxOTkuMTcgMzAuNDMgMTc1LjI3IDQ5LjczIDE1MC41MUM1Ny42NyAxNDAuMzEgNjUuMTcgMTI5Ljc0IDczLjE5IDExOS42Qzc4LjE4IDExMy4yOSA4NC4wMyAxMDcuNDQgODguNjkgMTAwLjkzQzkzLjAzIDk0Ljg3IDk3LjA0IDg4LjgyIDEwMi4zMSA4My40N0MxMDkuMSA3Ni41NyAxMTYuNzYgNzAuNjUgMTI0LjM3IDY0LjczQzEzMi4yIDU4LjYzIDEzOS45NSA1Mi41MSAxNDguMjggNDcuMUMxNzcuNDggMjguMTEgMjEzLjMgMTcuODMgMjQ4LjA0IDE2LjFaIiBmaWxsPSIjMkY0RUQ2IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzJGNEVENiIgc3Ryb2tlLXdpZHRoPSIwLjI1IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+DQo8L3N2Zz4=");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+}
+
+/* 국소광 — STONE-FLOW-06
+ *
+ * 지면이 Off White라 돌보다 밝은 빛은 지면에 묻혀 보이지 않는다. 밝기 대신
+ * 옅은 색 웅덩이를 지면에 깔아 빛이 고인 자리로 읽히게 한다.
+ * 반짝임·번쩍임을 쓰지 않으므로 경계 없이 한 번에 옅어진다.
+ * 돌 뒤에 두어 조형을 가리지 않는다.
+ */
+.ht-stone-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% * var(--ht-stone-glow-spread));
+  aspect-ratio: 1;
+  opacity: 0;
+  background: radial-gradient(closest-side, var(--ht-stone-glow), transparent);
+  transform: translate(-50%, -50%);
+  transition: opacity var(--ht-stone-motion) var(--ht-stone-ease);
+}
+
+/* 오른쪽으로 옮겨오며 완전해진다. */
+.ht-viewport[data-stone-state="visible"] .ht-stone {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* 계속 오른쪽으로 가면서 컬러 면 뒤로 내려가 보이지 않게 된다.
+   치워지는 느낌이 아니라 면 뒤로 넘어가는 인상을 유지한다(RIT-AIR-07).
+   B13의 재등장은 이 방향과 대응되게 잡아야 한다(STONE-FLOW-07). */
+.ht-viewport[data-stone-state="behind"] .ht-stone {
+  opacity: 0;
+  transform: translate(calc(-50% + 3.5rem), 4.5rem);
+}
+
+/* 빛나는 안녕돌 — 요구사항 정의서 §9.4
+ *
+ * `behind`에서 그대로 올라와 가운데에 선다. 사라진 방향(오른쪽·아래)과 대응되게
+ * 되돌아오므로 같은 돌의 귀환으로 읽힌다(STONE-FLOW-07).
+ * 형태는 건드리지 않고 빛만 더한다(STONE-FLOW-05).
+ * 재등장 모션은 2초를 넘기지 않는다(STONE-FLOW-08). --ht-stone-motion이 그 시간이다.
+ */
+.ht-viewport[data-stone-state="glowing"] .ht-stone {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* 빛은 재등장에서만 켠다. 환기의 첫 등장은 빛 없는 상태다(STONE-FLOW-05). */
+.ht-viewport[data-stone-state="glowing"] .ht-stone-glow {
+  opacity: 1;
+}
+
+/* 빛나는 안녕돌 최종 장면 — 요구사항 정의서 §9.4
+ *
+ * 공간 상세를 닫으면 같은 지면 위에 모달이 오르고 그 안에서 돌이 서서히 드러난다.
+ * 뒤에 남은 공간 화면은 스크림으로 가라앉힌다. 모달 지면은 Off White를 유지해
+ * 돌이 밝은 지면 위에 서는 관계를 바꾸지 않는다(가이드 4.6).
+ * 요약·완료 연출을 넣지 않으므로 안에 두는 것은 돌·첫 한틈 안내·`한틈 마치기`뿐이다.
+ */
+.ht-final-modal {
+  position: absolute;
+  z-index: var(--ht-z-sheet);
+  top: 50%;
+  right: var(--ht-screen-gutter);
+  left: var(--ht-screen-gutter);
+  display: grid;
+  gap: var(--ht-space-5);
+  padding: var(--ht-space-6) var(--ht-space-5) var(--ht-space-5);
+  background: var(--ht-color-ground);
+  border-radius: var(--ht-radius-sheet);
+
+  /* 아래에서 살짝 올라오며 든다. 튀어오르지 않는다(STONE-FLOW-06). */
+  opacity: 0;
+  transform: translateY(calc(-50% + 1rem));
+  transition:
+    opacity var(--ht-motion-base) var(--ht-ease-standard),
+    transform var(--ht-motion-base) var(--ht-ease-standard);
+}
+
+.ht-step[data-final-open="true"] .ht-final-modal {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+.ht-step[data-final-open="true"] .ht-scrim {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 안녕돌이 설 자리. 빛이 위아래로 퍼지므로 돌 높이보다 넉넉히 둔다
+   (가이드 5.3 `안녕돌 주변에 충분한 여백을 두고`). */
+.ht-final-stone {
+  position: relative;
+  height: 11rem;
+}
+
+/* 지면에서 옮겨 온 돌. 크기는 지면에 있을 때와 같게 유지한다(STONE-FLOW-05).
+   자리만 모달 기준으로 다시 잡는다. 이동·빛은 지면에서 쓰던 규칙을 그대로 쓴다. */
+.ht-final-stone > .ht-stone {
+  bottom: 3.6rem;
+  width: 5.4rem;
+}
+
+/* 첫 한틈에서만 보여주는 안내. 리추얼을 요약하지 않고 안녕돌이 무엇인지만 말한다. */
+.ht-final-note {
+  margin: 0;
+  color: var(--ht-color-muted);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* RIT-AIR-08 모션 축소 환경에서는 큰 위치 이동 없이 Fade만 쓴다. */
+@media (prefers-reduced-motion: reduce) {
+  .ht-stone,
+  .ht-viewport[data-stone-state="visible"] .ht-stone,
+  .ht-viewport[data-stone-state="behind"] .ht-stone,
+  .ht-viewport[data-stone-state="glowing"] .ht-stone {
+    transform: translate(-50%, 0);
+  }
+}
+
+/* 개발용 ?hold=1로 화면을 고정해 볼 때는 모션을 끄고 상태를 즉시 적용한다.
+   검수 프레임이 트랜지션 진행에 의존하지 않게 한다. */
+.ht-viewport[data-hold="true"] .ht-stone,
+.ht-viewport[data-hold="true"] .ht-stone-glow,
+.ht-viewport[data-hold="true"] .ht-field,
+.ht-viewport[data-hold="true"] .ht-air-sentence,
+.ht-viewport[data-hold="true"] .ht-scrim,
+.ht-viewport[data-hold="true"] .ht-bottom-sheet,
+.ht-viewport[data-hold="true"] .ht-final-modal {
+  transition: none;
+}
+
+/* STEP 0 — 사용 여부는 가이드에서 결정 대기. v0.3의 후보 구도를 쓴다. */
+.ht-viewport[data-current-step="entry"] .ht-field {
+  inset: var(--ht-field-entry-inset);
+  border-radius: var(--ht-field-entry-radius);
+}
+
+/* 마음 선택 1 — 중간 · 상단 */
+.ht-viewport[data-current-step="mind-1"] .ht-field {
+  inset: var(--ht-field-mind1-inset);
+  border-radius: var(--ht-field-mind1-radius);
+}
+
+/* 마음 선택 2 — 지면 위쪽을 가로로 가르는 띠. 아래가 둥글다. */
+.ht-viewport[data-current-step="mind-2"] .ht-field {
+  inset: var(--ht-field-mind2-inset);
+  border-radius: var(--ht-field-mind2-radius);
+}
+
+/* 마음 선택 3 — 중간 · 하단 */
+.ht-viewport[data-current-step="mind-3"] .ht-field {
+  inset: var(--ht-field-mind3-inset);
+  border-radius: var(--ht-field-mind3-radius);
+}
+
+/* 행동 — 가이드 표에서 `작음 · 상단`. 문장을 상단에 두고 아래에 큰 여백을 남기는
+   구도라서 얇은 상단 띠로 둔다. 환기의 큰 하단 면과 구도 축이 반대다. */
+.ht-viewport[data-current-step="action"] .ht-field {
+  inset: var(--ht-field-action-inset);
+  border-radius: var(--ht-field-action-radius);
+}
+
+/* 환기 — 가이드 표에서 `가장 큼`. 전환 장면이 이 구도로 이동한다.
+   문장은 필드 위가 아니라 위쪽 Off White 지면에 두므로 Ink 가독성을 지킨다. */
+.ht-viewport[data-current-step="transition"] .ht-field,
+.ht-viewport[data-current-step="air"] .ht-field {
+  inset: var(--ht-field-air-inset);
+  border-radius: var(--ht-field-air-radius);
+}
+
+/* 마음 선택 3 → 환기 전환은 약 2초 장면이다(RIT-TR-02).
+   정확한 시간과 easing은 실기기 검증에서 확정한다. */
+.ht-viewport[data-current-step="transition"] .ht-field {
+  --ht-field-motion: var(--ht-field-motion-transition);
+}
+
+/* 떠나는 화면은 짧은 Fade로 거둔다(RIT-TR-03).
+   지면과 필드는 계속 보이므로 완전히 빈 중간 화면이 생기지 않는다. */
+.ht-step[data-leaving="true"] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ht-motion-base) var(--ht-ease-standard);
+}
+
+/* 전환·환기 지면. 고정 헤드를 위쪽에 두고 아래 블루 필드와 분리한다.
+   문장은 필드 위가 아니라 Off White 지면에 둔다(UI-07 가독성 우선). */
+.ht-screen--air {
+  padding-top: calc(max(1.5rem, env(safe-area-inset-top)) + 5rem);
+}
+
+/* 환기 화면의 문구는 가운데 정렬한다(사용자 결정 2026-09-15).
+   선택 화면의 왼쪽 정렬 규칙(SEL-COM-01)은 선택지에만 적용되므로 충돌하지 않는다. */
+.ht-screen--air {
+  text-align: center;
+}
+
+/* 고정 헤드는 화면의 역할을 알리는 안내다. 가이드 6.4의 Body로 한 단 낮춰
+   아래 문장(Sentence)과 위계를 구분한다.
+   헤드는 왼쪽 정렬, 아래 문장은 가운데 정렬로 역할을 더 구분한다(사용자 결정 2026-09-15). */
+.ht-air-head {
+  margin: 0;
+  color: var(--ht-color-muted);
+  text-align: left;
+}
+
+/* 미러링 문장과 환기 문장이 같은 영역을 쓴다. 두 문장을 누적하지 않는다(RIT-AIR-03). */
+.ht-air-body {
+  margin-top: var(--ht-space-4);
+}
+
+/* `이어보기`는 문장 바로 아래에 두고 가운데 정렬한다(사용자 결정 2026-09-15).
+ *
+ * 크기를 기존보다 약 30% 줄였다. 폭은 지면의 50% → 35%로 줄이고, 높이는
+ * 최소 터치 높이(--ht-touch-min, 44px)에서 멈춘다. 30%를 그대로 적용하면
+ * 39px이 되어 손으로 누를 수 있는 최소 크기 아래로 내려간다.
+ *
+ * 환기 문장 단계의 진행 동작 `다음으로`는 B9에서 저장 동작보다 높은 위계로 둔다.
+ */
+.ht-primary-action--inline {
+  width: 35%;
+  min-height: var(--ht-touch-min);
+  margin: var(--ht-space-5) auto 0;
+}
+
+.ht-air-sentence {
+  margin: 0;
+  transition: opacity var(--ht-motion-base) var(--ht-ease-standard);
+}
+
+/* 환기 문장은 미러링 문장보다 길다. 한 줄에 더 많은 글자가 들어가도록 글자 크기를
+   1.5rem(24px)으로 줄인다. 미러링 문장은 기본 Sentence 크기를 그대로 쓴다.
+   후보값이며 실기기 검증에서 확정한다. */
+.ht-screen--air[data-phase="air"] .ht-air-sentence {
+  font-size: 1.5rem;
+}
+
+/* 절 하나가 한 블록이다. 확장절 1과 2는 서로 다른 블록이라 절 경계에서 줄이 바뀐다.
+   블록 안에서는 줄을 고르게 나눠 한쪽만 길게 남는 줄바꿈을 막는다.
+   가이드 6.4의 `감성적 줄바꿈보다 의미 단위 줄바꿈 우선`을 데이터 구조로 구현한 것이다. */
+.ht-air-line {
+  display: block;
+  text-wrap: balance;
+}
+
+.ht-air-sentence[data-fading="true"] {
+  opacity: 0;
+}
+
+/* 하단 동작은 블루 필드 위에 놓인다. 가이드 4.1의 Reverse Text를 쓴다. */
+.ht-save-action--on-field {
+  color: var(--ht-color-reverse);
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+/* 저장 상태에서는 Light Blue 면 위 Ink 글자로 바꾼다. 가이드가 읽히는 조합으로 둔 쌍이다. */
+.ht-save-action--on-field[aria-pressed="true"] {
+  color: var(--ht-color-ink);
+  background: var(--ht-color-interaction);
+  border-color: var(--ht-color-ink);
+}
+
+.ht-action-row [hidden] {
+  display: none;
+}
+
+/* 진행·저장 동작의 위치 — 사용자 결정 2026-09-15
+ *
+ * 하단에 붙이면 문장과의 거리가 멀어 읽은 것과 할 것이 끊겨 보인다.
+ * 문장 바로 아래에 붙이면 화면 상단 3분의 1로 올라와 한 손 엄지 구간에서 벗어난다.
+ * 그래서 문장 아래 여백에 상한을 두고, 남는 공간은 동작 아래로 보낸다.
+ *
+ * 가이드 5.3의 `아래쪽에 큰 여백을 둘 수 있다`는 그대로 지켜진다. 여백의 위치만 바뀐다.
+ * 환기 화면에서는 안녕돌이 문장과 동작 사이에 나타나므로 이 상한이 겹침도 막는다.
+ */
+.ht-screen--air .ht-action-row,
+.ht-screen--action .ht-action-row {
+  margin-top: 14rem;
+}
+
+/* 행동 지면 — 가이드 5.3
+ * 문장을 상단 1/3에 두고 아래쪽에 큰 여백을 남겨 시선이 아래로 흐르게 한다.
+ * 환기가 문장을 가운데 모아 시선을 머물게 하는 것과 구도 축이 반대다.
+ * 정렬도 환기와 달리 왼쪽으로 두어 두 화면이 같아 보이지 않게 한다.
+ */
+.ht-screen--action {
+  padding-top: calc(max(1.5rem, env(safe-area-inset-top)) + 4rem);
+  /* 문장은 환기와 같이 가운데 정렬한다(사용자 결정 2026-09-15).
+     헤드만 왼쪽에 두어 역할을 구분한다. */
+  text-align: center;
+}
+
+.ht-action-head {
+  margin: 0;
+  color: var(--ht-color-muted);
+  text-align: left;
+}
+
+/* 행동 제안과 작은 변화를 한 덩어리의 연속된 콘텐츠로 둔다(§9.2). */
+.ht-action-body {
+  margin-top: var(--ht-space-4);
+}
+
+/* 절 안에서 줄을 고르게 나눠 한쪽만 길게 남는 줄바꿈을 막는다.
+   가이드 6.4의 `의미 단위 줄바꿈 우선`을 자동으로 근사한 것이다. */
+.ht-action-body > * {
+  margin: 0;
+}
+
+/* 줄 블록. 마커로 나눈 줄은 여기서 끊기고, 한 블록 안에서는 고르게 나뉜다. */
+.ht-text-line {
+  display: block;
+  text-wrap: balance;
+}
+
+/* 실제로 따라 할 행동이 가장 잘 읽혀야 한다. 변화 설명은 한 단 낮춘다.
+   정렬도 행동 문장과 다르게 오른쪽으로 두어 역할을 구분한다(사용자 결정 2026-09-15). */
+.ht-action-change {
+  margin-top: var(--ht-space-4);
+  color: var(--ht-color-muted);
+  text-align: right;
+}
+
+/* 진입 화면만 문구 묶음을 지면 가운데에 둔다(ENT-04~07). */
+.ht-screen--center {
+  align-items: center;
+  justify-content: center;
+}
+
+/* 공간 화면 — 요구사항 정의서 §9.3
+ *
+ * 안내 면 · 사진 카드 · 환기 설명 · 진행 버튼이 위에서 아래로 흐른다.
+ * 카드 사진은 4:3을 지켜야 하므로(SPACE-12) 남는 높이는 사진이 아니라
+ * `.ht-action-row`의 `margin-top: auto`가 흡수한다.
+ */
+.ht-screen--space {
+  gap: var(--ht-space-2);
+}
+
+/* 안내 면과 사진 카드를 여백으로 끊는다(SPACE-14). */
+.ht-screen--space .ht-space-feature-card {
+  margin-top: var(--ht-space-4);
+}
+
+/* 추가 사진을 가로로 넘겨보는 자리 — SPACE-04
+ *
+ * 첫 장이 대표 사진이고 나머지는 선택 탐색이다. 모두 보도록 강제하지 않으므로
+ * 끝까지 넘기지 않아도 닫을 수 있다. 아래로 미는 닫기는 제공하지 않으므로(SPACE-06)
+ * 세로 방향 overscroll은 시트에 가둔다.
+ */
+.ht-space-gallery {
+  display: flex;
+  gap: var(--ht-space-2);
+  margin: 0.65rem 0 0.85rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+}
+
+.ht-space-gallery::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* 한 장이 시트 폭을 꽉 채운다. 사진 안에는 글자를 넣지 않는다(SPACE-12). */
+.ht-space-gallery .ht-space-photo {
+  flex: 0 0 100%;
+  margin: 0;
+  padding: 0;
+  scroll-snap-align: center;
+}
+
+/* 사진이 한 장뿐이면 넘길 것이 없으므로 위치 표시를 두지 않는다. */
+.ht-space-photo-position:empty,
+.ht-space-photo-position[data-single="true"] {
+  display: none;
+}
+
+/* 문단 사이만 띄우고 줄 사이는 행간에 맡긴다. */
+.ht-text-block {
+  display: block;
+}
+
+.ht-text-block + .ht-text-block {
+  margin-top: var(--ht-space-3);
+}
+
+/* components.css의 `.ht-space-card-description span`은 줄을 양끝으로 늘려
+   매거진 편집감을 만든다. 그 처리는 손으로 길이를 맞춘 예시 문구를 전제로 한다.
+   정본 CSV의 줄은 13~29자로 길이가 제각각이라 짧은 줄이 글자 사이까지 벌어진다.
+   실제 데이터가 들어오는 프로토타입에서는 늘리지 않는다.
+   디자인 시스템의 이 규칙은 실기기 검증에서 다시 판단한다. */
+.ht-space-card-description span {
+  text-align: left;
+  text-align-last: left;
+}
+
+.ht-space-detail-head {
+  margin: 0;
+}
+
+.ht-space-detail-action {
+  margin-top: var(--ht-space-4);
+}
+
+/* B4~B13에서 각 단계의 실제 화면으로 교체한다. */
+.ht-step__placeholder {
+  margin: auto;
+  padding: var(--ht-screen-gutter);
+  text-align: center;
+  font-weight: var(--ht-type-label-weight);
+  line-height: 1.5;
+}
+
+.ht-step__placeholder span {
+  font-size: var(--ht-type-caption-size);
+  font-weight: var(--ht-type-caption-weight);
+  color: var(--ht-color-muted);
+}
+
+.ht-bottom-nav[hidden] {
+  display: none;
+}
+
+/* 개발용 단계 이동 바 — ?dev=1 에서만 노출 */
+.ht-devbar {
+  width: min(100vw, 46rem);
+  padding: var(--ht-space-4) var(--ht-space-5) var(--ht-space-5);
+  border-top: 1px solid var(--ht-color-line);
+  font-size: var(--ht-type-caption-size);
+  color: var(--ht-color-muted);
+}
+
+.ht-devbar__title {
+  margin: 0 0 var(--ht-space-3);
+  font-weight: var(--ht-type-caption-weight);
+}
+
+.ht-devbar__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ht-space-2);
+  margin-bottom: var(--ht-space-2);
+  align-items: center;
+}
+
+.ht-devbar button {
+  min-height: var(--ht-touch-min);
+  padding: 0 var(--ht-space-3);
+  border: 1px solid var(--ht-color-line-strong);
+  border-radius: var(--ht-radius-pill);
+  background: var(--ht-color-reverse);
+  color: var(--ht-color-ink);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.ht-devbar button[aria-current="true"] {
+  background: var(--ht-color-signature);
+  border-color: var(--ht-color-signature);
+  color: var(--ht-color-reverse);
+}
+
+.ht-devbar__state {
+  font-variant-numeric: tabular-nums;
+}
